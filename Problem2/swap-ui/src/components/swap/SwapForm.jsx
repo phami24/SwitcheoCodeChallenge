@@ -3,6 +3,7 @@ import { Box, Button, Flex, FormLabel, Text } from "@chakra-ui/react";
 import AmountInput from "./AmountInput";
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import TokenSelectedButton from "./TokenSelectedButton";
+import { calculateValue } from "../../services/tokenService";
 
 const SwapForm = () => {
   const defaultToken = {
@@ -25,34 +26,25 @@ const SwapForm = () => {
     setAmountTo(tempAmount);
   };
 
-  const calculateValue = (amount, fromToken, toToken) => {
-    if (!fromToken || !toToken) return 0;
-    return (amount * fromToken.price) / toToken.price;
-  };
-
   const handleAmountFromChange = (value) => {
     const amount = parseFloat(value) || 0;
-    console.log(amount + "From");
     setAmountFrom(amount);
     const convertedValue = calculateValue(
       amount,
       selectedTokenFrom,
       selectedTokenTo
     );
-    console.log(convertedValue + "To");
     setAmountTo(convertedValue.toFixed(2));
   };
 
   const handleAmountToChange = (value) => {
     const amount = parseFloat(value) || 0;
-    console.log(amount + "From");
     setAmountTo(amount);
     const convertedValue = calculateValue(
       amount,
       selectedTokenFrom,
       selectedTokenTo
     );
-    console.log(convertedValue + "To");
     setAmountFrom(convertedValue.toFixed(2));
   };
 

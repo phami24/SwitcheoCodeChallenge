@@ -10,4 +10,10 @@ const fetchTokenData = async () => {
   }
 };
 
-export { fetchTokenData };
+const calculateValue = (amount, fromToken, toToken) => {
+  if (!fromToken || !toToken) return 0;
+  const value = (amount * fromToken.price) / toToken.price;
+  return parseFloat(value.toFixed(2));
+};
+
+export { fetchTokenData , calculateValue };
