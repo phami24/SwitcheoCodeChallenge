@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Flex, FormLabel, Text } from "@chakra-ui/react";
 import AmountInput from "./AmountInput";
-import { TriangleDownIcon } from "@chakra-ui/icons";
+import { ArrowDownIcon, TriangleDownIcon } from "@chakra-ui/icons";
 import TokenSelectedButton from "./TokenSelectedButton";
 import { calculateValue } from "../../services/tokenService";
 
@@ -93,7 +93,7 @@ const SwapForm = () => {
           w={1}
           onClick={swapTokens}
         >
-          <TriangleDownIcon />
+          <ArrowDownIcon />
         </Button>
         <Box backgroundColor={"#1B1B1B"} p={5} rounded={20} mb={1}>
           <FormLabel>Buy</FormLabel>
@@ -114,16 +114,6 @@ const SwapForm = () => {
           )}
         </Box>
       </Box>
-      <Button
-        alignItems={"center"}
-        rounded={20}
-        h={"60px"}
-        backgroundColor={"#311C31"}
-        w={"full"}
-        color={"#FC72FF"}
-      >
-        Connect Wallet
-      </Button>
     </Box>
   );
 };

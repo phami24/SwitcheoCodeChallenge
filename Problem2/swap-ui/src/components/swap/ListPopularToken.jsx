@@ -9,7 +9,7 @@ const ListPopularToken = ({ tokens, setSelectedToken , onClose}) => {
     onClose();
   };
   return (
-    <Box mt={2}>
+    <Box mt={2} className="scroll-container">
       {tokens.map((token) => (
         <Flex
           key={token.currency}
@@ -17,7 +17,7 @@ const ListPopularToken = ({ tokens, setSelectedToken , onClose}) => {
           gap="3"
           mb="2"
           cursor="pointer"
-          _hover={{ backgroundColor: "#ccc" }}
+          _hover={{ backgroundColor: "#1E1F21" }}
           w="full"
           p="2"
           borderRadius="md"
