@@ -1,5 +1,5 @@
 // TokenSelectedButton.js
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -14,6 +14,8 @@ import {
   Text,
   useDisclosure,
   Input,
+  InputLeftAddon,
+  InputGroup,
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
 import TokenItems from "./TokenItems";
@@ -104,11 +106,17 @@ const TokenSelectedButton = ({ selectedToken, setSelectedToken }) => {
           <ModalHeader borderBottom="1px solid #565858">
             <Text>Select a token</Text>
             <Box mt={2}>
-              <Input
-                placeholder="Tìm kiếm tên hoặc dán địa chỉ"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+              <InputGroup>
+                <InputLeftAddon>
+                  <Search2Icon />
+                </InputLeftAddon>
+                <Input
+                  focusBorderColor="none"
+                  placeholder="Tìm kiếm tên hoặc dán địa chỉ"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </InputGroup>
             </Box>
             <TokenItems setSelectedToken={setSelectedToken} onClose={onClose} />
           </ModalHeader>
