@@ -6,7 +6,7 @@ const fetchTokenData = async () => {
     return data;
   } catch (error) {
     console.error("Error fetching token data:", error);
-    throw error; // Re-throw the error to handle it where you call the service
+    throw error;
   }
 };
 

@@ -7,22 +7,25 @@ import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
-import {config} from "./config/config"
+import { config } from "./config/config";
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 localStorage.setItem("chakra-ui-color-mode", "dark");
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <WagmiProvider config={config}>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </QueryClientProvider>
-      </WagmiProvider>
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider>
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </ChakraProvider>
+    </RecoilRoot>
   </React.StrictMode>
 );
 

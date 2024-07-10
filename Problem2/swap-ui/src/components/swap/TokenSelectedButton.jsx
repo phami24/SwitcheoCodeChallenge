@@ -54,6 +54,10 @@ const TokenSelectedButton = ({ selectedToken, setSelectedToken }) => {
     });
   };
 
+  const filteredTokens = tokens.filter((token) =>
+    token.currency.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box>
       <Button
@@ -111,7 +115,7 @@ const TokenSelectedButton = ({ selectedToken, setSelectedToken }) => {
           <ModalCloseButton />
           <ModalBody>
             <ListPopularToken
-              tokens={tokens}
+              tokens={filteredTokens}
               setSelectedToken={setSelectedToken}
               onClose={onClose}
             />
