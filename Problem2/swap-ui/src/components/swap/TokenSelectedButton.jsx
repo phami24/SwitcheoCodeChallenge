@@ -110,7 +110,7 @@ const TokenSelectedButton = ({ selectedToken, setSelectedToken }) => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </Box>
-            <TokenItems />
+            <TokenItems setSelectedToken={setSelectedToken} onClose={onClose} />
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>

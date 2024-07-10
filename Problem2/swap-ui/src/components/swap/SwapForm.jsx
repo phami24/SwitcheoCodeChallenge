@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Flex, FormLabel, Text } from "@chakra-ui/react";
 import AmountInput from "./AmountInput";
-import { ArrowDownIcon, TriangleDownIcon } from "@chakra-ui/icons";
+import { ArrowDownIcon } from "@chakra-ui/icons";
 import TokenSelectedButton from "./TokenSelectedButton";
 import { calculateValue } from "../../services/tokenService";
+import { useRecoilState } from "recoil";
+import { selectedTokenFromAtom, selectedTokenToAtom } from "../../atoms/tokenAtom";
 
 const SwapForm = () => {
-  const defaultToken = {
-    currency: "ETH",
-    date: "2023-08-29T07:10:52.000Z",
-    price: 1645.9337373737374,
-  };
-  const [selectedTokenFrom, setSelectedTokenFrom] = useState(defaultToken);
-  const [selectedTokenTo, setSelectedTokenTo] = useState(null);
+  const [selectedTokenFrom, setSelectedTokenFrom] = useRecoilState(
+    selectedTokenFromAtom
+  );
+  const [selectedTokenTo, setSelectedTokenTo] = useRecoilState(
+    selectedTokenToAtom
+  );
   const [amountFrom, setAmountFrom] = useState(0);
   const [amountTo, setAmountTo] = useState(0);
 

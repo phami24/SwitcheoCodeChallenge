@@ -11,5 +11,5 @@ export const selectedTokenFromAtom = atom({
 
 export const selectedTokenToAtom = atom({
   key: "selectedTokenToAtom",
-  default: {},
+  default: null,
 });
