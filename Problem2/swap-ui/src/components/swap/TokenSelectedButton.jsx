@@ -102,6 +102,8 @@ const TokenSelectedButton = ({ selectedToken, setSelectedToken }) => {
           border="1px solid #565858"
           borderRadius="20px"
           h={"fit-content"}
+          position="relative"
+          overflow="hidden"
         >
           <ModalHeader borderBottom="1px solid #565858">
             <Text>Select a token</Text>
@@ -118,10 +120,14 @@ const TokenSelectedButton = ({ selectedToken, setSelectedToken }) => {
                 />
               </InputGroup>
             </Box>
-            <TokenItems setSelectedToken={setSelectedToken} onClose={onClose} />
+            <TokenItems />
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody
+            overflowY="auto"
+            position="relative"
+            borderRadius="inherit"
+          >
             <ListPopularToken
               tokens={filteredTokens}
               setSelectedToken={setSelectedToken}

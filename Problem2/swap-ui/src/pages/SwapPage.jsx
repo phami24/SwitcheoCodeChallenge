@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { Box, Flex, Button, useDisclosure } from "@chakra-ui/react";
+import React from "react";
+import {
+  Box,
+  Flex,
+  Button,
+  useDisclosure,
+} from "@chakra-ui/react";
 import SwapForm from "../components/swap/SwapForm";
-import { Account } from "../components/wallet/account";
 import { WalletOptions } from "../components/wallet/wallet-options";
 import { useAccount } from "wagmi";
+import ConnectWallet from "../components/wallet/connect-wallet";
 
-function ConnectWallet() {
-  const { isConnected } = useAccount();
-  if (isConnected) return <Account />;
-  return null;
-}
 
 const SwapPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { isConnected } = useAccount();
   localStorage.setItem("chakra-ui-color-mode", "dark");
 
   return (
@@ -23,10 +23,14 @@ const SwapPage = () => {
       justifyContent="center"
       alignItems="center"
     >
+       <Box position="absolute" top="4" right="4">
+        <ConnectWallet />
+      </Box>
       {/* Form body */}
       <Box>
         <SwapForm />
         <Button
+          hidden={isConnected}
           alignItems={"center"}
           rounded={20}
           h={"60px"}
@@ -40,7 +44,7 @@ const SwapPage = () => {
       </Box>
       {/* Sidebar Wallet Options */}
       <WalletOptions isOpen={isOpen} onClose={onClose} />
-      <ConnectWallet />
+      {/* <ConnectWallet /> */}
     </Flex>
   );
 };
