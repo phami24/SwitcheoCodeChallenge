@@ -9,6 +9,11 @@ interface FormattedWalletBalance {
   formatted: string;
 }
 
+// define price interface for
+interface Price {
+  [currency: string]: number;
+}
+
 class Datasource {
   url: string;
 
@@ -16,7 +21,7 @@ class Datasource {
     this.url = url;
   }
 
-  async getPrices(): Promise<{ [currency: string]: number }> {
+  async getPrices(): Promise<Price> {
     const response = await fetch(this.url);
     if (!response.ok) {
       throw new Error("Failed to fetch prices");
@@ -25,7 +30,6 @@ class Datasource {
   }
 }
 
-interface Props extends BoxProps {}
 const WalletPage: React.FC<Props> = (props: Props) => {
   const { children, ...rest } = props;
   const balances = useWalletBalances();
@@ -38,7 +42,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
     datasource.getPrices().then(setPrices).catch(console.error);
   }, []);
 
-  const getPriority = (blockchain: string): number => {
+  const getPriority = (blockchain: any) => {
     switch (blockchain) {
       case "Osmosis":
         return 100;
@@ -51,26 +55,25 @@ const WalletPage: React.FC<Props> = (props: Props) => {
       case "Neo":
         return 20;
       default:
-        return -99;
+        return undefined;
     }
   };
 
-  const sortedBalances = useMemo(() => {
-    return balances
-      .filter((balance: WalletBalance) => {
+ const sortedBalances = useMeme(() => {
+  return balances
+    .filter((balance: WalletBalance | undefined) => {
+      if (balance !== undefined) {
         const balancePriority = getPriority(balance.blockchain);
-        return balancePriority > -99 && balance.amount > 0;
-      })
-      .sort((lhs: WalletBalance, rhs: WalletBalance) => {
-        const leftPriority = getPriority(lhs.blockchain);
-        const rightPriority = getPriority(rhs.blockchain);
-        if (leftPriority > rightPriority) {
-          return -1;
-        } else if (rightPriority > leftPriority) {
-          return 1;
-        }
-      });
-  }, [balances, prices]);
+        return balancePriority !== undefined  && balance.amount > 0;
+      }
+      return false; // Filter out undefined balances explicitly
+    })
+    .sort((lhs: WalletBalance, rhs: WalletBalance) => {
+      const leftPriority = getPriority(lhs.blockchain) || 0; 
+      const rightPriority = getPriority(rhs.blockchain) || 0; 
+      return rightPriority - leftPriority; 
+    });
+}, [balances]);
 
   const formattedBalances = sortedBalances.map((balance: WalletBalance) => {
     return {
@@ -79,12 +82,13 @@ const WalletPage: React.FC<Props> = (props: Props) => {
     };
   });
 
-  const rows = sortedBalances.map(
+  //use formattedBalances for map
+  const rows = formattedBalances.map(
     (balance: FormattedWalletBalance, index: number) => {
       const usdValue = prices[balance.currency] * balance.amount;
       return (
         <WalletRow
-          className={classes.row}
+          className={index}
           key={index}
           amount={balance.amount}
           usdValue={usdValue}
@@ -96,3 +100,12 @@ const WalletPage: React.FC<Props> = (props: Props) => {
 
   return <div {...rest}>{rows}</div>;
 };
+
+// define WalletRow
+const WalletRow = ({ className, amount, usdValue, formattedAmount }) => (
+  <div className={className}>
+    <div>{formattedAmount}</div>
+    <div>{amount}</div>
+    <div>{usdValue}</div>
+  </div>
+);
